@@ -11,8 +11,8 @@ Router.use(
   middleware.stripToken,
   middleware.verifyToken
 )
-Router.use('/labels/artists', ArtistRouter)
-Router.use('/labels/artists/albums', AlbumRouter)
+Router.use('/labels/:label_id/artists', ArtistRouter)
+Router.use('/labels/:label_id/artists/:artist_id/albums', AlbumRouter)
 Router.use('/auth', AuthRouter)
 
 module.exports = Router
