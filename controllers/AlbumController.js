@@ -38,8 +38,57 @@ const CreateCode = async (req, res) => {
   }
 }
 
+const CreateMultipleCodes = async (req, res) => {
+  try {
+    let codes = await Code.bulkCreate(req.body)
+    res.send(codes)
+  } catch (error) {
+    throw error
+  }
+}
+
+const GetAllAlbumCodes = async (req, res) => {
+  try {
+    let albumId = parseInt(req.params.album_id)
+    const albumCodes = await Code.findAll({
+      where: { albumId: albumId }
+    })
+    res.send(albumCodes)
+  } catch (error) {
+    throw error
+  }
+}
+
+const GetAllUnusedAlbumCodes = async (req, res) => {
+  try {
+    let albumId = parseInt(req.params.album_id)
+    const albumCodes = await Code.findAll({
+      where: { albumId: albumId, used: false }
+    })
+    res.send(albumCodes)
+  } catch (error) {
+    throw error
+  }
+}
+
+const GetAllUsedAlbumCodes = async (req, res) => {
+  try {
+    let albumId = parseInt(req.params.album_id)
+    const albumCodes = await Code.findAll({
+      where: { albumId: albumId, used: true }
+    })
+    res.send(albumCodes)
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   UpdateAlbum,
   DestroyAlbum,
-  CreateCode
+  CreateCode,
+  CreateMultipleCodes,
+  GetAllAlbumCodes,
+  GetAllUnusedAlbumCodes,
+  GetAllUsedAlbumCodes
 }
