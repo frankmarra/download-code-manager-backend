@@ -1,18 +1,18 @@
 const { Album } = require('../models')
 
-const CreateAlbum = async (req, res) => {
-  try {
-    let artistId = parseInt(req.params.artist_id)
-    let newAlbum = {
-      artistId,
-      ...req.body
-    }
-    let album = await Album.create(newAlbum)
-    res.send(album)
-  } catch (error) {
-    throw error
-  }
-}
+// const CreateAlbum = async (req, res) => {
+//   try {
+//     let artistId = parseInt(req.params.artist_id)
+//     let newAlbum = {
+//       artistId,
+//       ...req.body
+//     }
+//     let album = await Album.create(newAlbum)
+//     res.send(album)
+//   } catch (error) {
+//     throw error
+//   }
+// }
 
 const UpdateAlbum = async (req, res) => {
   try {
@@ -38,7 +38,6 @@ const DestroyAlbum = async (req, res) => {
 }
 
 module.exports = {
-  CreateAlbum,
   UpdateAlbum,
   DestroyAlbum
 }

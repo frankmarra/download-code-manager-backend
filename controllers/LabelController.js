@@ -1,4 +1,3 @@
-const { UPSERT } = require('sequelize/types/query-types')
 const { Label, Artist, Album } = require('../models')
 
 const GetLabels = async (req, res) => {
@@ -7,9 +6,6 @@ const GetLabels = async (req, res) => {
       include: [
         {
           model: Artist
-        },
-        {
-          model: Album
         }
       ]
     })
@@ -25,10 +21,12 @@ const GetLabel = async (req, res) => {
     const label = await Label.findByPk(labelId, {
       include: [
         {
-          model: Artist
-        },
-        {
-          model: Album
+          model: Artist,
+          include: [
+            {
+              model: Album
+            }
+          ]
         }
       ]
     })
@@ -51,8 +49,23 @@ const UpdateLabel = async (req, res) => {
   }
 }
 
+const CreateArtist = async (req, res) => {
+  try {
+    let labelId = parseInt(req.params.label_id)
+    let newArtist = {
+      labelId,
+      ...req.body
+    }
+    let artist = await Artist.create(newArtist)
+    res.send(artist)
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   GetLabels,
   GetLabel,
-  UpdateLabel
+  UpdateLabel,
+  CreateArtist
 }

@@ -15,6 +15,11 @@ const comparePassword = async (storedPassword, password) => {
   return passwordMatch
 }
 
+const createToken = (payload) => {
+  let token = jwt.sign(payload, APP_SECRET)
+  return token
+}
+
 const verifyToken = (req, res, next) => {
   const { token } = res.locals
   try {
@@ -39,4 +44,12 @@ const stripToken = (req, res, next) => {
   } catch (error) {
     res.status(401).send({ status: 'ERROR', msg: 'Unauthorized' })
   }
+}
+
+module.exports = {
+  stripToken,
+  verifyToken,
+  createToken,
+  comparePassword,
+  hashPassword
 }

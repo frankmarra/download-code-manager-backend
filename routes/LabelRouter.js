@@ -4,6 +4,7 @@ const middleware = require('../middleware')
 
 Router.get('/', controller.GetLabels)
 Router.get('/:label_id', controller.GetLabel)
+Router.post('/:label_id', controller.CreateArtist)
 Router.put('/:label_id', controller.UpdateLabel)
 
 module.exports = Router
