@@ -1,18 +1,4 @@
-const { Album } = require('../models')
-
-// const CreateAlbum = async (req, res) => {
-//   try {
-//     let artistId = parseInt(req.params.artist_id)
-//     let newAlbum = {
-//       artistId,
-//       ...req.body
-//     }
-//     let album = await Album.create(newAlbum)
-//     res.send(album)
-//   } catch (error) {
-//     throw error
-//   }
-// }
+const { Album, Code } = require('../models')
 
 const UpdateAlbum = async (req, res) => {
   try {
@@ -37,7 +23,23 @@ const DestroyAlbum = async (req, res) => {
   }
 }
 
+const CreateCode = async (req, res) => {
+  try {
+    let albumId = parseInt(req.params.album_id)
+    let newCode = {
+      albumId,
+      used: false,
+      ...req.body
+    }
+    let code = await Code.create(newCode)
+    res.send(code)
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   UpdateAlbum,
-  DestroyAlbum
+  DestroyAlbum,
+  CreateCode
 }

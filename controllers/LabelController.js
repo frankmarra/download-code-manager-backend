@@ -1,4 +1,4 @@
-const { Label, Artist, Album } = require('../models')
+const { Label, Artist, Album, Code } = require('../models')
 
 const GetLabels = async (req, res) => {
   try {
@@ -24,7 +24,12 @@ const GetLabel = async (req, res) => {
           model: Artist,
           include: [
             {
-              model: Album
+              model: Album,
+              include: [
+                {
+                  model: Code
+                }
+              ]
             }
           ]
         }

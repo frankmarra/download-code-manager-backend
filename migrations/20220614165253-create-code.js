@@ -1,23 +1,26 @@
 'use strict'
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('albums', {
+    await queryInterface.createTable('Codes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      albumName: {
+      albumCode: {
         type: Sequelize.STRING
       },
-      artistId: {
+      used: {
+        type: Sequelize.BOOLEAN
+      },
+      albumId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'artistId',
+        field: 'albumId',
         onDelete: 'CASCADE',
         references: {
-          model: 'artists',
+          model: 'albums',
           key: 'id'
         }
       },
@@ -32,6 +35,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('albums')
+    await queryInterface.dropTable('Codes')
   }
 }
