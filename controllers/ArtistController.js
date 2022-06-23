@@ -1,25 +1,18 @@
 const { Artist, Album } = require('../models')
 
-// const CreateArtist = async (req, res) => {
-//   try {
-//     let labelId = parseInt(req.params.label_id)
-//     let newArtist = {
-//       labelId,
-//       ...req.body
-//     }
-//     let artist = await Artist.create(newArtist)
-//     res.send(artist)
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
 const CreateAlbum = async (req, res) => {
   try {
+    let { name } = req.body
     let artistId = parseInt(req.params.artist_id)
+    let slug = name.toLowerCase()
+    slug = slug
+      .replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
     let newAlbum = {
       artistId,
-      ...req.body
+      name,
+      slug
     }
     let album = await Album.create(newAlbum)
     res.send(album)

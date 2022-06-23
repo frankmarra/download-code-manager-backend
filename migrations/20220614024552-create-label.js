@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      labelName: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      labelEmail: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -24,10 +24,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      labelWebsite: {
+      url: {
         type: Sequelize.STRING
       },
-      labelLogo: {
+      logo: {
+        type: Sequelize.STRING
+      },
+      slug: {
+        type: Sequelize.STRING
+      },
+      redeemLink: {
         type: Sequelize.STRING
       },
       createdAt: {

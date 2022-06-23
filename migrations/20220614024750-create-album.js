@@ -8,7 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      albumName: {
+      name: {
+        type: Sequelize.STRING
+      },
+      slug: {
         type: Sequelize.STRING
       },
       artistId: {

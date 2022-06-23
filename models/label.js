@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Label.init(
     {
-      labelName: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      labelEmail: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
@@ -30,8 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      labelWebsite: DataTypes.STRING,
-      labelLogo: DataTypes.STRING
+      url: DataTypes.STRING,
+      logo: DataTypes.STRING,
+      slug: DataTypes.STRING,
+      redeemLink: DataTypes.STRING
     },
     {
       sequelize,

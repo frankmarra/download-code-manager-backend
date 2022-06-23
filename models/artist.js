@@ -18,8 +18,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Artist.init(
     {
-      artistName: DataTypes.STRING,
-      artistSite: DataTypes.STRING,
+      name: DataTypes.STRING,
+      url: DataTypes.STRING,
+      slug: DataTypes.STRING,
       labelId: {
         type: DataTypes.INTEGER,
         allowNull: false,

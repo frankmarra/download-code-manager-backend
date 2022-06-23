@@ -4,20 +4,21 @@ const middleware = require('../middleware')
 const Login = async (req, res) => {
   try {
     const label = await Label.findOne({
-      where: { labelEmail: req.body.labelEmail },
+      where: { email: req.body.email },
       raw: true
     })
     if (
       label &&
       (await middleware.comparePassword(
         label.passwordDigest,
-        req.body.labelPassword
+        req.body.password
       ))
     ) {
       let payload = {
         id: label.id,
-        labelEmail: label.labelEmail,
-        labelName: label.labelName
+        email: label.email,
+        name: label.name,
+        slug: label.slug
       }
       let token = middleware.createToken(payload)
       return res.send({ label: payload, token })
@@ -30,12 +31,19 @@ const Login = async (req, res) => {
 
 const Register = async (req, res) => {
   try {
-    const { labelEmail, labelPassword, labelName } = req.body
-    let passwordDigest = await middleware.hashPassword(labelPassword)
+    let { email, password, name } = req.body
+    let passwordDigest = await middleware.hashPassword(password)
+    email = email.toLowerCase()
+    let slug = name.toLowerCase()
+    slug = slug
+      .replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
     const label = await Label.create({
-      labelEmail,
+      email,
       passwordDigest,
-      labelName
+      name,
+      slug
     })
     res.send(label)
   } catch (error) {

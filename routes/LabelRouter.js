@@ -6,5 +6,6 @@ Router.get('/', controller.GetLabels)
 Router.get('/:label_id', controller.GetLabel)
 Router.post('/:label_id', controller.CreateArtist)
 Router.put('/:label_id', controller.UpdateLabel)
+Router.get('/:label_id/artists', controller.GetLabelArtists)
 
 module.exports = Router

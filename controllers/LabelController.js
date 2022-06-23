@@ -56,13 +56,43 @@ const UpdateLabel = async (req, res) => {
 
 const CreateArtist = async (req, res) => {
   try {
+    let { name, url } = req.body
     let labelId = parseInt(req.params.label_id)
+    let slug = name.toLowerCase()
+    slug = slug
+      .replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
     let newArtist = {
       labelId,
-      ...req.body
+      name,
+      url,
+      slug
     }
     let artist = await Artist.create(newArtist)
     res.send(artist)
+  } catch (error) {
+    throw error
+  }
+}
+
+const GetLabelArtists = async (req, res) => {
+  try {
+    let labelId = parseInt(req.params.label_id)
+    let artists = await Artist.findAll({
+      where: { labelId: labelId },
+      include: [
+        {
+          model: Album,
+          include: [
+            {
+              model: Code
+            }
+          ]
+        }
+      ]
+    })
+    res.send(artists)
   } catch (error) {
     throw error
   }
@@ -72,5 +102,6 @@ module.exports = {
   GetLabels,
   GetLabel,
   UpdateLabel,
-  CreateArtist
+  CreateArtist,
+  GetLabelArtists
 }
