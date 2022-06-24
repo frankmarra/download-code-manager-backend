@@ -41,6 +41,26 @@ const GetLabel = async (req, res) => {
   }
 }
 
+const CreateLabel = async (req, res) => {
+  try {
+    let { email, name } = req.body
+    email = email.toLowerCase()
+    let slug = name.toLowerCase()
+    slug = slug
+      .replace(/[^a-z0-9 -]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+    const label = await Label.create({
+      email,
+      name,
+      slug
+    })
+    res.send(label)
+  } catch (error) {
+    throw error
+  }
+}
+
 const UpdateLabel = async (req, res) => {
   try {
     let labelId = parseInt(req.params.label_id)
@@ -103,5 +123,6 @@ module.exports = {
   GetLabel,
   UpdateLabel,
   CreateArtist,
-  GetLabelArtists
+  GetLabelArtists,
+  CreateLabel
 }

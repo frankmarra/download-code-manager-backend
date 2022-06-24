@@ -1,27 +1,26 @@
-const { Label } = require('../models')
+const { User } = require('../models')
 const middleware = require('../middleware')
 
 const Login = async (req, res) => {
   try {
-    const label = await Label.findOne({
+    const user = await User.findOne({
       where: { email: req.body.email },
       raw: true
     })
     if (
-      label &&
-      (await middleware.comparePassword(
-        label.passwordDigest,
-        req.body.password
-      ))
+      user &&
+      (await middleware.comparePassword(user.passwordDigest, req.body.password))
     ) {
       let payload = {
-        id: label.id,
-        email: label.email,
-        name: label.name,
-        slug: label.slug
+        id: user.id,
+        email: user.email,
+        name: user.firstName,
+        labelId: user.labelId,
+        isActive: user.isActive,
+        isAdmin: user.isAdmin
       }
       let token = middleware.createToken(payload)
-      return res.send({ label: payload, token })
+      return res.send({ user: payload, token })
     }
     res.status(401).send({ status: 'ERROR', msg: 'Unauthorized' })
   } catch (error) {
@@ -31,21 +30,17 @@ const Login = async (req, res) => {
 
 const Register = async (req, res) => {
   try {
-    let { email, password, name } = req.body
+    let { email, password, labelId, firstName, lastName } = req.body
     let passwordDigest = await middleware.hashPassword(password)
     email = email.toLowerCase()
-    let slug = name.toLowerCase()
-    slug = slug
-      .replace(/[^a-z0-9 -]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-    const label = await Label.create({
+    const user = await User.create({
       email,
       passwordDigest,
-      name,
-      slug
+      labelId,
+      firstName,
+      lastName
     })
-    res.send(label)
+    res.send(user)
   } catch (error) {
     throw error
   }

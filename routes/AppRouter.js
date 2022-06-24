@@ -4,6 +4,7 @@ const ArtistRouter = require('./ArtistRouter')
 const AlbumRouter = require('./AlbumRouter')
 const AuthRouter = require('./AuthRouter')
 const CodeRouter = require('./CodeRouter')
+const UserRouter = require('./UserRouter')
 const middleware = require('../middleware')
 
 Router.use(
@@ -19,5 +20,6 @@ Router.use(
   CodeRouter
 )
 Router.use('/auth', AuthRouter)
+Router.use('/users', UserRouter)
 
 module.exports = Router

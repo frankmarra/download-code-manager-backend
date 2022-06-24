@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Label.hasMany(models.Artist, { foreignKey: 'labelId' })
+      Label.hasMany(models.User, { foreignKey: 'labelId' })
     }
   }
   Label.init(
@@ -25,10 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isEmail: true
         }
-      },
-      passwordDigest: {
-        type: DataTypes.STRING,
-        allowNull: false
       },
       url: DataTypes.STRING,
       logo: DataTypes.STRING,

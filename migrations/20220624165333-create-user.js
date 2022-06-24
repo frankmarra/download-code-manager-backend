@@ -1,14 +1,18 @@
 'use strict'
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('labels', {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      firstName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      lastName: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -20,17 +24,28 @@ module.exports = {
           isEmail: true
         }
       },
-      url: {
-        type: Sequelize.STRING
+      isAdmin: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       },
-      logo: {
-        type: Sequelize.STRING
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
       },
-      slug: {
-        type: Sequelize.STRING
+      passwordDigest: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      redeemLink: {
-        type: Sequelize.STRING
+      labelId: {
+        type: Sequelize.INTEGER,
+        field: 'labelId',
+        onDelete: 'CASCADE',
+        references: {
+          model: 'labels',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +58,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('labels')
+    await queryInterface.dropTable('users')
   }
 }
