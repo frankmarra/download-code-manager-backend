@@ -51,9 +51,22 @@ const GetAllAlbumCodes = async (req, res) => {
   try {
     let albumId = parseInt(req.params.album_id)
     const albumCodes = await Code.findAll({
-      where: { albumId: albumId }
+      where: { albumId: albumId },
+      order: [['id', 'ASC']]
     })
-    res.send(albumCodes)
+    const usedTotal = await Code.count({
+      where: {
+        used: true,
+        albumId: albumId
+      }
+    })
+    const unusedTotal = await Code.count({
+      where: {
+        used: false,
+        albumId: albumId
+      }
+    })
+    res.json({ albumCodes, usedTotal, unusedTotal })
   } catch (error) {
     throw error
   }

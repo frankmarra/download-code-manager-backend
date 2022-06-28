@@ -20,7 +20,7 @@ const Login = async (req, res) => {
         isAdmin: user.isAdmin
       }
       let token = middleware.createToken(payload)
-      return res.send({ user: payload, token })
+      return res.send({ user: payload })
     }
     res.status(401).send({ status: 'ERROR', msg: 'Unauthorized' })
   } catch (error) {
