@@ -76,8 +76,7 @@ const UpdateLabel = async (req, res) => {
 
 const CreateArtist = async (req, res) => {
   try {
-    let { name, url } = req.body
-    let labelId = parseInt(req.params.label_id)
+    let { name, url, email, logo, redeemLink, labelId } = req.body
     let slug = name.toLowerCase()
     slug = slug
       .replace(/[^a-z0-9 -]/g, '')
@@ -87,6 +86,9 @@ const CreateArtist = async (req, res) => {
       labelId,
       name,
       url,
+      email,
+      logo,
+      redeemLink,
       slug
     }
     let artist = await Artist.create(newArtist)
@@ -118,11 +120,22 @@ const GetLabelArtists = async (req, res) => {
   }
 }
 
+const DestroyLabel = async (req, res) => {
+  try {
+    let labelId = parseInt(req.params.label_id)
+    await Label.destroy({ where: { id: labelId } })
+    res.send({ message: `Label with id of ${labelId} has been removed` })
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   GetLabels,
   GetLabel,
   UpdateLabel,
   CreateArtist,
   GetLabelArtists,
-  CreateLabel
+  CreateLabel,
+  DestroyLabel
 }

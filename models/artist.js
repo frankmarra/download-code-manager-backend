@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'labelId'
       })
       Artist.hasMany(models.Album, { foreignKey: 'artistId' })
+      Artist.hasMany(models.Code, { foreignKey: 'artistId' })
+      Artist.hasMany(models.User, { foreignKey: 'artistId' })
     }
   }
   Artist.init(
@@ -22,8 +24,23 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true
+        }
+      },
       url: DataTypes.STRING,
+      logo: DataTypes.STRING,
       slug: DataTypes.STRING,
+      redeemLink: DataTypes.STRING,
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      },
       labelId: {
         type: DataTypes.INTEGER,
         allowNull: false,

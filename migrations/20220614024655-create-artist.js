@@ -12,11 +12,30 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true
+        }
+      },
       url: {
+        type: Sequelize.STRING
+      },
+      logo: {
         type: Sequelize.STRING
       },
       slug: {
         type: Sequelize.STRING
+      },
+      redeemLink: {
+        type: Sequelize.STRING
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
       },
       labelId: {
         type: Sequelize.INTEGER,

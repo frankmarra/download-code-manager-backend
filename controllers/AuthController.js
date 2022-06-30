@@ -16,6 +16,7 @@ const Login = async (req, res) => {
         email: user.email,
         name: user.firstName,
         labelId: user.labelId,
+        artistId: user.artistId,
         isActive: user.isActive,
         isAdmin: user.isAdmin
       }

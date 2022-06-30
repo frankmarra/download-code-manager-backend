@@ -1,5 +1,21 @@
 const { Album, Code } = require('../models')
 
+const GetAlbum = async (req, res) => {
+  try {
+    let albumId = parseInt(req.params.album_id)
+    const album = await Album.findByPk(albumId, {
+      include: [
+        {
+          model: Code
+        }
+      ]
+    })
+    res.send(album)
+  } catch (error) {
+    throw error
+  }
+}
+
 const UpdateAlbum = async (req, res) => {
   try {
     let albumId = parseInt(req.params.album_id)
@@ -97,6 +113,7 @@ const GetAllUsedAlbumCodes = async (req, res) => {
 }
 
 module.exports = {
+  GetAlbum,
   UpdateAlbum,
   DestroyAlbum,
   CreateCode,

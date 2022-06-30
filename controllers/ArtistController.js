@@ -1,5 +1,25 @@
-const { Artist, Album } = require('../models')
+const { Artist, Album, Code } = require('../models')
 
+const GetArtist = async (req, res) => {
+  try {
+    let artistId = parseInt(req.params.artist_id)
+    const artist = await Artist.findByPk(artistId, {
+      include: [
+        {
+          model: Album,
+          include: [
+            {
+              model: Code
+            }
+          ]
+        }
+      ]
+    })
+    res.send(artist)
+  } catch (error) {
+    throw error
+  }
+}
 const CreateAlbum = async (req, res) => {
   try {
     let { name } = req.body
@@ -21,6 +41,19 @@ const CreateAlbum = async (req, res) => {
   }
 }
 
+const UpdateArtist = async (req, res) => {
+  try {
+    let artistId = parseInt(req.params.artist_id)
+    let updatedArtist = await Artist.update(req.body, {
+      where: { id: artistId },
+      returning: true
+    })
+    res.send(updatedArtist)
+  } catch (error) {
+    throw error
+  }
+}
+
 const DestroyArtist = async (req, res) => {
   try {
     let artistId = parseInt(req.params.artist_id)
@@ -31,7 +64,35 @@ const DestroyArtist = async (req, res) => {
   }
 }
 
+const GetAllArtistCodes = async (req, res) => {
+  try {
+    let artistId = parseInt(req.params.artist_id)
+    const artistCodes = await Code.findAll({
+      where: { artistId: artistId },
+      order: [['id', 'ASC']]
+    })
+    const usedTotal = await Code.count({
+      where: {
+        used: true,
+        artistId: artistId
+      }
+    })
+    const unusedTotal = await Code.count({
+      where: {
+        used: false,
+        artistId: artistId
+      }
+    })
+    res.json({ artistCodes, usedTotal, unusedTotal })
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   CreateAlbum,
-  DestroyArtist
+  DestroyArtist,
+  GetAllArtistCodes,
+  UpdateArtist,
+  GetArtist
 }

@@ -30,7 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       url: DataTypes.STRING,
       logo: DataTypes.STRING,
       slug: DataTypes.STRING,
-      redeemLink: DataTypes.STRING
+      redeemLink: DataTypes.STRING,
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      }
     },
     {
       sequelize,

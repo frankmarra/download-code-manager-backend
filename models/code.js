@@ -10,8 +10,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Code.belongsTo(models.Album, {
-        as: 'code',
+        as: 'albumCodeId',
         foreignKey: 'albumId'
+      })
+      Code.belongsTo(models.Artist, {
+        as: 'artistCodeId',
+        foreignKey: 'artistId'
       })
     }
   }
@@ -26,6 +30,16 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         references: {
           model: 'albums',
+          key: 'id'
+        }
+      },
+      artistId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: 'artistId',
+        onDelete: 'CASCADE',
+        references: {
+          model: 'artists',
           key: 'id'
         }
       }

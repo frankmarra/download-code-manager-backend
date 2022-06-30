@@ -14,6 +14,11 @@ module.exports = {
       slug: {
         type: Sequelize.STRING
       },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      },
       artistId: {
         type: Sequelize.INTEGER,
         allowNull: false,
