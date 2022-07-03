@@ -64,6 +64,18 @@ const DestroyArtist = async (req, res) => {
   }
 }
 
+const GetActiveAlbums = async (req, res) => {
+  try {
+    artistId = parseInt(req.params.artist_id)
+    const activeAlbums = await Album.findAll({
+      where: { artistId: artistId, isActive: true }
+    })
+    res.send(activeAlbums)
+  } catch (error) {
+    throw error
+  }
+}
+
 const GetAllArtistCodes = async (req, res) => {
   try {
     let artistId = parseInt(req.params.artist_id)
@@ -92,6 +104,7 @@ const GetAllArtistCodes = async (req, res) => {
 module.exports = {
   CreateAlbum,
   DestroyArtist,
+  GetActiveAlbums,
   GetAllArtistCodes,
   UpdateArtist,
   GetArtist

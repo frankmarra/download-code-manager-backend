@@ -120,6 +120,18 @@ const GetLabelArtists = async (req, res) => {
   }
 }
 
+const GetActiveArtists = async (req, res) => {
+  try {
+    let labelId = parseInt(req.params.label_id)
+    let artists = await Artist.findAll({
+      where: { labelId: labelId, isActive: true }
+    })
+    res.send(artists)
+  } catch (error) {
+    throw error
+  }
+}
+
 const DestroyLabel = async (req, res) => {
   try {
     let labelId = parseInt(req.params.label_id)
@@ -133,6 +145,7 @@ const DestroyLabel = async (req, res) => {
 module.exports = {
   GetLabels,
   GetLabel,
+  GetActiveArtists,
   UpdateLabel,
   CreateArtist,
   GetLabelArtists,

@@ -114,6 +114,7 @@ const GetAllUsedAlbumCodes = async (req, res) => {
 
 module.exports = {
   GetAlbum,
+
   UpdateAlbum,
   DestroyAlbum,
   CreateCode,
