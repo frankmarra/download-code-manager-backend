@@ -4,6 +4,12 @@ const middleware = require('../middleware')
 
 Router.post('/login', controller.Login)
 Router.post('/register', controller.Register)
+Router.post(
+  '/update',
+  //middleware.stripToken,
+  //middleware.verifyToken,
+  controller.UpdatePassword
+)
 Router.get(
   '/session',
   middleware.stripToken,

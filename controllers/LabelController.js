@@ -17,8 +17,10 @@ const GetLabels = async (req, res) => {
 
 const GetLabel = async (req, res) => {
   try {
-    let labelId = parseInt(req.params.label_id)
-    const label = await Label.findByPk(labelId, {
+    let labelSlug = req.params.label_slug
+    const label = await Label.findOne({
+      where: { slug: labelSlug },
+
       include: [
         {
           model: Artist,
