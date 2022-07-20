@@ -22,8 +22,10 @@ const Login = async (req, res) => {
         isAdmin: user.isAdmin
       }
       let token = middleware.createToken(payload)
-      return res.send({ user: payload })
+
+      return res.status(200).send({ user: payload, token })
     }
+
     res.status(401).send({ status: 'ERROR', msg: 'Unauthorized' })
   } catch (error) {
     throw error
@@ -74,9 +76,17 @@ const CheckSession = async (req, res) => {
   res.send(payload)
 }
 
+const Logout = async (req, res) => {
+  return res
+    .clearCookie('access_token')
+    .status(200)
+    .json({ message: 'Successfully logged out' })
+}
+
 module.exports = {
   Login,
   Register,
   UpdatePassword,
-  CheckSession
+  CheckSession,
+  Logout
 }
